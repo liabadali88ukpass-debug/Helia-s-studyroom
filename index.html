@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>پانسیون</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#f5f5f5;--tx:#232b2b;--ti:#23297a;--ln:#dcdcdc;--card:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Segoe UI",Tahoma,system-ui,sans-serif;font-size:14px;line-height:1.5}
+h1,h2,h3,.ti{color:var(--ti);font-weight:600;margin:0 0 12px}h2{font-size:20px}h3{font-size:16px}
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:56px;background:var(--bg);z-index:20;border-bottom:1px solid var(--ln)}
+#mb{position:absolute;right:14px;top:10px;width:38px;height:36px;border:1px solid var(--ln);background:#fff;border-radius:6px;cursor:pointer;font-size:18px;color:var(--ti)}
+#panel{position:fixed;top:calc(56px + env(safe-area-inset-top,0px));left:0;right:0;background:#fff;border-bottom:1px solid var(--ln);display:flex;gap:6px;padding:0 14px;overflow-x:auto;max-height:0;opacity:0;transition:.3s;z-index:19}
+#panel.open{max-height:64px;padding:10px 14px;opacity:1}
+#panel button{flex:none;border:1px solid var(--ln);background:var(--bg);color:var(--tx);padding:7px 16px;border-radius:6px;font:inherit;cursor:pointer}
+#panel button.on{background:var(--ti);color:#fff;border-color:var(--ti)}
+#clk{position:fixed;z-index:21;color:var(--ti);font-weight:300;direction:ltr;white-space:nowrap;pointer-events:none}
+main{max-width:860px;margin:0 auto;padding:76px 16px 60px}
+.view{display:none}.view.on{display:block}
+.hero{height:210px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.card,.box{background:var(--card);border:1px solid var(--ln);border-radius:8px;padding:14px}
+.card b{display:block;font-size:26px;font-weight:600;color:var(--ti)}.card span{font-size:12px}
+.seg{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.seg button,.chip{border:1px solid var(--ln);background:#fff;color:var(--tx);padding:4px 12px;border-radius:14px;font:inherit;cursor:pointer}
+.seg button.on,.chip.on{background:var(--ti);color:#fff;border-color:var(--ti)}
+svg{width:100%;height:auto;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+label.f{display:block;font-size:13px}
+input[type=text],input[type=date]{width:100%;margin-top:4px;padding:8px;border:1px solid var(--ln);border-radius:6px;font:inherit;background:#fff;color:var(--tx)}
+input:focus{outline:2px solid var(--ti);outline-offset:-1px}
+.btn{background:var(--ti);color:#fff;border:0;padding:9px 22px;border-radius:6px;font:inherit;cursor:pointer}
+.sec{margin-bottom:16px}.msg{font-size:13px;margin-top:6px;min-height:20px}.bad{color:#b3261e}.ok{color:#1b6e3a}
+#sw{text-align:center;padding-top:30px}
+#sd{font-size:min(20vw,110px);font-weight:200;direction:ltr;color:var(--tx);font-variant-numeric:tabular-nums}
+.rb{display:flex;justify-content:center;gap:40px;margin:26px 0}
+.rb button{width:92px;height:92px;border-radius:50%;border:0;font:inherit;font-size:15px;cursor:pointer;color:#fff}
+#bl{background:#8a8f94}#br{background:#1b8a4a}#br.stop{background:#c0392b}
+.lap{display:flex;justify-content:space-between;max-width:420px;margin:0 auto;padding:8px 0;border-bottom:1px solid var(--ln);direction:ltr}
+.rep{padding:12px 0;border-bottom:1px solid var(--ln)}
+.av{width:72px;height:72px;border-radius:50%;background:#e6e6ec;object-fit:cover;border:1px solid var(--ln)}
+.row{display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid var(--ln)}.row.me{background:#eceef9;border-radius:6px}.row b{flex:1;font-weight:600}.rk{width:34px;text-align:center;font-weight:600;color:var(--ti);font-size:16px}.row .av{width:40px;height:40px}
+@media(max-width:560px){.cards{grid-template-columns:1fr}}
+#auth{position:fixed;inset:0;background:var(--bg);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}#auth .box{width:100%;max-width:360px}#auth .btn+.btn{background:#8a8f94;margin-inline-start:8px}
+</style></head><body>
+<div id="auth"><div class="box"><h2>ورود به پانسیون</h2><label class="f">ایمیل<input type="text" id="ae" dir="ltr" autocomplete="email"></label><label class="f" style="margin-top:8px">رمز عبور (حداقل ۶ کاراکتر)<input type="text" id="ap" dir="ltr" autocomplete="current-password" style="-webkit-text-security:disc"></label><label class="f" style="margin-top:8px">نام (فقط هنگام ثبت‌نام)<input type="text" id="an"></label><div style="margin-top:14px"><button class="btn" id="al">ورود</button><button class="btn" id="asg">ثبت‌نام</button></div><div class="msg bad" id="am"></div></div></div>
+<header><button id="mb" aria-label="منو">☰</button></header>
+<nav id="panel"></nav>
+<div id="clk"></div>
+<main>
+<section class="view on" id="v-home"><div class="hero"></div>
+<div class="cards"><div class="card"><span>میانگین ساعت مطالعه (۷ روز اخیر)</span><b id="c1">–</b></div><div class="card"><span>میانگین تعداد تست (۷ روز اخیر)</span><b id="c2">–</b></div><div class="card"><span>میانگین استفاده از گوشی (ساعت، ۷ روز اخیر)</span><b id="c3">–</b></div></div>
+<div id="charts"></div>
+<div class="box"><h3>روند ساعت مطالعه هر درس</h3><div class="seg" id="sg-s"></div><div class="seg" id="chips"></div><div id="ch-s"></div></div>
+</section>
+<section class="view" id="v-sw"><div id="sw"><div class="ti">کرنومتر</div><div id="sd">00:00.00</div>
+<div class="rb"><button id="bl">دور</button><button id="br">شروع</button></div>
+<label><input type="checkbox" id="auto"> ثبت خودکار زمان کرنومتر در گزارش امروز</label>
+<div class="msg" id="swm"></div><div id="laps"></div></div></section>
+<section class="view" id="v-rep"><h2>ثبت گزارش کار</h2>
+<div class="box sec"><label class="f">تاریخ گزارش <span id="jd"></span><input type="date" id="rd"></label></div>
+<div class="box sec"><h3>۱. ساعت مطالعه</h3><label class="f">ساعت مطالعه کلی (اعشاری، مثل ۲.۵)<input type="text" inputmode="decimal" id="tot"></label><div class="grid" id="sub" style="margin-top:12px"></div><div class="msg" id="sm"></div></div>
+<div class="box sec"><h3>۲. تعداد تست و نمونه‌سوال</h3><div class="grid" id="tst"></div>
+<label style="display:block;margin:14px 0 8px"><input type="checkbox" id="gen"> دروس عمومی</label><div class="grid" id="dsc"></div></div>
+<div class="box sec"><h3>۳. استفاده از گوشی</h3><label class="f">ساعت (اعشاری)<input type="text" inputmode="decimal" id="ph"></label></div>
+<button class="btn" id="save">ثبت گزارش</button><div class="msg" id="rm"></div></section>
+<section class="view" id="v-pan"><h2>پانسیون</h2><p>رتبه‌بندی بر اساس زمان کرنومتر است؛ ساعت واردشده به‌صورت دستی در این رقابت حساب نمی‌شود.</p><div class="cards" id="pm"></div><div class="seg" id="sg-p"></div><div class="box" id="lb"></div></section>
+<section class="view" id="v-his"><h2>پروفایل و گزارش‌های من</h2>
+<div class="box sec" style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><img class="av" id="av" alt=""><div style="flex:1;min-width:200px"><label class="f">نام<input type="text" id="pn"></label><label class="f" style="margin-top:6px">آیدی<input type="text" id="pi" dir="ltr"></label></div><div><input type="file" id="pf" accept="image/*" style="max-width:190px"><br><button class="btn" id="ps" style="margin-top:8px">ذخیره پروفایل</button> <button class="btn" id="lo" style="background:#8a8f94;margin-top:8px">خروج</button></div></div>
+<div id="hist"></div></section>
+</main>
+<script>
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0');
+const SP=[['bio','زیست'],['phy','فیزیک'],['che','شیمی'],['mat','ریاضی'],['ear','زمین']],GN=[['lit','ادبیات'],['rel','دینی']],AL=[...SP,...GN];
+const COL=['#23297a','#c0392b','#1b8a4a','#d68910','#7d3c98','#117a8b','#6e6e6e'];
+let R=[],db=null,uid='local',P={name:'',handle:'',photo:''},sel=new Set(['bio']),mode={0:'d',1:'d',2:'d',s:'d'};
+const num=v=>{v=String(v).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[٫,،]/g,'.');const n=parseFloat(v);return isNaN(n)||n<0?0:n};
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const D=iso=>new Date(iso+'T12:00:00'),fa=n=>(Math.round(n*100)/100).toLocaleString('fa-IR');
+const jf=iso=>D(iso).toLocaleDateString('fa-IR-u-ca-persian',{year:'numeric',month:'long',day:'numeric'});
+const jp=iso=>{const o={};new Intl.DateTimeFormat('en-u-ca-persian-nu-latn',{year:'numeric',month:'numeric',day:'numeric'}).formatToParts(D(iso)).forEach(p=>o[p.type]=p.value);return o};
+const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const wk=iso=>{const d=D(iso);d.setDate(d.getDate()-(d.getDay()+1)%7);return ymd(d)};
+const today=()=>ymd(new Date());
+/* storage (Supabase) */
+const SUPABASE_URL='sb_publishable_ujBImvUS-i4OkbDbjtZ5Uw_jqhYbUkJ',SUPABASE_KEY='PASTE_PUBLISHABLE_KEY_HERE';
+let sb=null,pendingName='';
+const fe=m=>({'Invalid login credentials':'ایمیل یا رمز عبور اشتباه است.','User already registered':'این ایمیل قبلاً ثبت‌نام کرده است.'}[m]||(/at least 6/.test(m)?'رمز عبور باید حداقل ۶ کاراکتر باشد.':m));
+function showAuth(t){$('#auth').style.display='flex';$('#am').textContent=t||''}
+async function init(){
+ if(SUPABASE_URL.indexOf('PASTE')===0||!window.supabase){showAuth('آدرس پروژه و کلید داخل فایل جایگزین نشده است.');return}
+ sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+ const {data}=await sb.auth.getSession();
+ if(data.session)await enter(data.session.user);else showAuth('');
+}
+async function enter(u){
+ uid=u.id;db=sb;$('#auth').style.display='none';
+ const {data:p}=await sb.from('profiles').select('*').eq('id',uid).maybeSingle();
+ if(p)P={name:p.name||'',handle:p.handle||'',photo:p.photo||''};
+ else{P.name=pendingName||'';await sb.from('profiles').upsert({id:uid,name:P.name,handle:'',photo:''})}
+ await loadReports();renderAll();subPan();
+}
+async function loadReports(){
+ const {data}=await sb.from('reports').select('*').order('created_at');
+ R=(data||[]).map(r=>({date:r.date,total:+r.total,subs:r.subs||{},tests:r.tests||{},desc:r.descs||{},phone:+r.phone||0,sw:r.sw,ts:new Date(r.created_at).getTime()}));
+}
+async function addReport(r){
+ const {error}=await sb.from('reports').insert({date:r.date,total:r.total,subs:r.subs,tests:r.tests,descs:r.desc,phone:r.phone,sw:!!r.sw});
+ if(error){alert('خطا در ثبت: '+error.message);return}
+ await loadReports();renderAll();
+}
+async function saveProfile(){await sb.from('profiles').upsert({id:uid,name:P.name,handle:P.handle,photo:P.photo||''})}
+async function authGo(signup){
+ const email=$('#ae').value.trim(),password=$('#ap').value;pendingName=$('#an').value.trim();
+ if(!email||!password)return showAuth('ایمیل و رمز عبور را وارد کنید.');
+ showAuth('لطفاً صبر کنید...');
+ const r=signup?await sb.auth.signUp({email,password}):await sb.auth.signInWithPassword({email,password});
+ if(r.error)return showAuth(fe(r.error.message));
+ if(r.data.session)await enter(r.data.session.user);else showAuth('ثبت‌نام انجام شد ولی ورود خودکار نشد. گزینه‌ی Confirm email را در Supabase خاموش کنید.');
+}
+/* pansion */
+let me={days:{}},pan=[],panSub=0;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fh=s=>{const m=Math.round(s/60),r=m%60;return fa(Math.floor(m/60))+':'+(r<10?'۰':'')+fa(r)};
+async function loadPan(){
+ if(!sb)return;
+ const [a,b]=await Promise.all([sb.from('profiles').select('id,name,handle,photo'),sb.from('sw_days').select('user_id,day,seconds')]);
+ const days={};(b.data||[]).forEach(x=>{(days[x.user_id]=days[x.user_id]||{})[x.day]=x.seconds});
+ pan=(a.data||[]).map(p=>({...p,days:days[p.id]||{}}));
+ me=pan.find(p=>p.id===uid)||{days:{}};
+ if($('#v-pan').classList.contains('on'))renderPan();
+}
+function subPan(){if(panSub||!sb)return;panSub=1;loadPan();setInterval(()=>{if($('#v-pan').classList.contains('on'))loadPan()},20000)}
+async function recPan(ms){const s=Math.round(ms/1000);if(!sb||s<1)return;
+ const {error}=await sb.rpc('add_sw_seconds',{sec:s,d:today()});if(!error)loadPan()}
+const psum=(p,k)=>{const days=p.days||{},w=wk(today());let t=0;for(const i in days){if(k==='d'&&i!==today())continue;if(k==='w'&&i<w)continue;t+=+days[i]||0}return t};
+function renderPan(){
+ const lb=$('#lb');
+ if(!db||uid==='local'){lb.innerHTML='<p>برای استفاده از پانسیون باید با حساب خود وارد شوید.</p>';$('#pm').innerHTML='';$('#sg-p').innerHTML='';return}
+ $('#pm').innerHTML=[['امروز','d'],['این هفته','w'],['مجموع','a']].map(([t,k])=>`<div class="card"><span>کرنومتر من: ${t}</span><b>${fh(psum(me,k))}</b></div>`).join('');
+ const md=mode.p||'w';$('#sg-p').innerHTML=[['d','امروز'],['w','این هفته'],['a','مجموع']].map(([k,t])=>`<button data-k="${k}" class="${md===k?'on':''}">${t}</button>`).join('');
+ $('#sg-p').onclick=e=>{const k=e.target.dataset.k;if(k){mode.p=k;renderPan()}};
+ const L=pan.map(p=>({p,t:psum(p,md)})).sort((a,b)=>b.t-a.t);
+ const md3=['🥇','🥈','🥉'];
+ lb.innerHTML=L.length?L.map((x,i)=>{const p=x.p,ph=typeof p.photo==='string'&&p.photo.indexOf('data:image/')===0?`<img class="av" src="${esc(p.photo)}" alt="">`:'<span class="av" style="display:inline-block"></span>';
+  return `<div class="row ${p.id===uid?'me':''}"><span class="rk">${md3[i]||fa(i+1)}</span>${ph}<b>${esc(p.name)||'بدون نام'}${p.handle?` <span dir="ltr" style="font-weight:400;font-size:12px">@${esc(p.handle)}</span>`:''}</b><span>${fh(x.t)} ساعت</span></div>`}).join(''):'<p>هنوز کسی در پانسیون نیست. کرنومتر را شروع و متوقف کنید تا نام شما اینجا ظاهر شود.</p>';
+}
+/* aggregation */
+function days(){const m={};R.forEach(r=>{const d=m[r.date]=m[r.date]||{h:0,t:0,p:0,s:{}};d.h+=r.total||0;d.p+=r.phone||0;d.t+=Object.values(r.tests||{}).reduce((a,b)=>a+b,0);for(const k in r.subs||{})d.s[k]=(d.s[k]||0)+r.subs[k]});return m}
+function series(m,f,md){
+ const n={d:14,w:56,m:180}[md],keys=[],lab={},vals={};
+ const kf={d:i=>i,w:wk,m:i=>{const p=jp(i);return p.year+'-'+p.month}};
+ for(let i=0;i<n;i++){const d=new Date();d.setDate(d.getDate()-i);const iso=ymd(d),k=kf[md](iso);
+  if(!keys.includes(k)){keys.push(k);const p=jp(iso);lab[k]=md==='m'?MN[p.month-1]:md==='w'?'هفته '+fa(p.month)+'/'+fa(p.day):fa(p.month)+'/'+fa(p.day)}}
+ keys.reverse().slice(md==='m'?-6:md==='w'?-8:0);
+ const ks=keys.slice(md==='m'?-6:md==='w'?-8:-14);
+ ks.forEach(k=>vals[k]=[]);
+ for(const iso in m){const k=kf[md](iso);if(vals[k]&&(md!=='d'||true))vals[k].push(f(m[iso]))}
+ return{labels:ks.map(k=>lab[k]),vals:ks.map(k=>vals[k].length?vals[k].reduce((a,b)=>a+b,0)/vals[k].length:0)}
+}
+function chart(el,L,S){
+ const W=640,H=200,pl=34,pb=26,mx=Math.max(1,...S.flatMap(s=>s.v))*1.15,n=L.length,x=i=>pl+(n>1?i*(W-pl-10)/(n-1):0),y=v=>H-pb-v/mx*(H-pb-12);
+ let g='';for(let i=0;i<=4;i++){const v=mx*i/4;g+=`<line x1="${pl}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#e2e2e2"/><text x="${pl-5}" y="${y(v)+4}" font-size="10" text-anchor="end" fill="#666">${Math.round(v*10)/10}</text>`}
+ L.forEach((l,i)=>{if(n<9||i%2===0)g+=`<text x="${x(i)}" y="${H-8}" font-size="10" text-anchor="middle" fill="#666">${l}</text>`});
+ S.forEach(s=>{g+=`<polyline fill="none" stroke="${s.c}" stroke-width="2" points="${s.v.map((v,i)=>x(i)+','+y(v)).join(' ')}"/>`+s.v.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="${s.c}"/>`).join('')});
+ el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" direction="ltr" style="direction:ltr">${g}</svg>`;
+}
+function seg(el,key,cb){el.innerHTML=[['d','روزانه'],['w','هفتگی'],['m','ماهانه']].map(([k,t])=>`<button data-k="${k}" class="${mode[key]===k?'on':''}">${t}</button>`).join('');el.onclick=e=>{const k=e.target.dataset.k;if(k){mode[key]=k;cb()}}}
+const VAR=[['ساعت مطالعه',d=>d.h],['تعداد تست',d=>d.t],['استفاده از گوشی (ساعت)',d=>d.p]];
+function renderHome(){
+ const m=days(),from=new Date();from.setDate(from.getDate()-6);const fi=ymd(from),rec=Object.keys(m).filter(k=>k>=fi);
+ [0,1,2].forEach(i=>{$('#c'+(i+1)).textContent=rec.length?fa(rec.reduce((a,k)=>a+VAR[i][1](m[k]),0)/rec.length):'–'});
+ const c=$('#charts');if(!c.children.length)VAR.forEach((v,i)=>{c.insertAdjacentHTML('beforeend',`<div class="box" style="margin-bottom:14px"><h3>${v[0]}</h3><div class="seg" id="sg${i}"></div><div id="ch${i}"></div></div>`)});
+ VAR.forEach((v,i)=>{const draw=()=>{seg($('#sg'+i),i,draw);const s=series(m,v[1],mode[i]);chart($('#ch'+i),s.labels,[{c:COL[0],v:s.vals}])};draw()});
+ const ds=()=>{seg($('#sg-s'),'s',ds);$('#chips').innerHTML=AL.map(([k,t],i)=>`<span class="chip ${sel.has(k)?'on':''}" data-k="${k}">${t}</span>`).join('');
+  const ss=AL.filter(([k])=>sel.has(k)).map(([k,t])=>({k,c:COL[AL.findIndex(a=>a[0]===k)],v:series(m,d=>d.s[k]||0,mode.s)}));
+  const L=series(m,d=>0,mode.s).labels;chart($('#ch-s'),L,ss.map(s=>({c:s.c,v:s.v.vals})))};
+ $('#chips').onclick=e=>{const k=e.target.dataset.k;if(k){sel.has(k)?sel.delete(k):sel.add(k);ds()}};ds();
+}
+/* clock */
+const clk=$('#clk');let hp=0;
+function tick(){clk.textContent=new Date().toLocaleTimeString('fa-IR',{hour12:false});place()}
+function place(){
+ const home=$('#v-home').classList.contains('on'),p=home?Math.min(1,scrollY/180):1,W=innerWidth,top0=88;
+ clk.style.fontSize=(76-(76-22)*(p))+'px';clk.style.top=(top0+(12-top0)*p+(p===1?0:0))+'px';
+ clk.style.left=((W-clk.offsetWidth)/2*(1-p)+16*p)+'px';
+ clk.style.fontWeight=p>0.5?500:300;
+}
+addEventListener('scroll',place);addEventListener('resize',place);setInterval(tick,1000);
+/* nav */
+const NAV=[['home','خانه'],['sw','کرنومتر'],['rep','ثبت گزارش'],['pan','پانسیون'],['his','پروفایل و گزارش‌ها']];
+$('#panel').innerHTML=NAV.map(([k,t])=>`<button data-k="${k}">${t}</button>`).join('');
+$('#mb').onclick=()=>$('#panel').classList.toggle('open');
+$('#panel').onclick=e=>{const k=e.target.dataset.k;if(k)go(k)};
+function go(k){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+k));document.querySelectorAll('#panel button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));$('#panel').classList.remove('open');scrollTo(0,0);place();if(k==='home')renderHome();if(k==='his')renderHist();if(k==='pan'){loadPan();renderPan()}}
+/* stopwatch */
+let sw={run:false,acc:0,st:0,seg0:0,laps:[]},raf;
+const ft=ms=>{const c=Math.floor(ms/10)%100,s=Math.floor(ms/1000)%60,m=Math.floor(ms/60000);return pad(m)+':'+pad(s)+'.'+pad(c)};
+const cur=()=>sw.acc+(sw.run?performance.now()-sw.st:0);
+function swr(){$('#sd').textContent=ft(cur());$('#br').textContent=sw.run?'توقف':(sw.acc?'ادامه':'شروع');$('#br').className=sw.run?'stop':'';$('#bl').textContent=sw.run?'دور':'صفر کردن';$('#bl').disabled=!sw.run&&!sw.acc;
+ $('#laps').innerHTML=sw.laps.map((l,i)=>`<div class="lap"><span>دور ${i+1}</span><span>${ft(l)}</span></div>`).reverse().join('')}
+function loop(){swr();if(sw.run)raf=requestAnimationFrame(loop)}
+$('#br').onclick=async()=>{if(sw.run){sw.acc+=performance.now()-sw.st;sw.run=false;const seg=sw.acc-sw.seg0;sw.seg0=sw.acc;recPan(seg);
+  if($('#auto').checked&&seg>=60000){await addReport({date:today(),total:seg/3600000,subs:{},tests:{},desc:{},phone:0,sw:1});$('#swm').textContent='زمان این مرحله در گزارش امروز ثبت شد.'}}
+ else{sw.st=performance.now();sw.run=true;$('#swm').textContent=''}loop()};
+$('#bl').onclick=()=>{if(sw.run){const t=cur();sw.laps.push(t-(sw.lapT||0));sw.lapT=t}else{sw={run:false,acc:0,st:0,seg0:0,laps:[]};sw.lapT=0}swr()};
+/* report */
+function buildForm(){
+ $('#sub').innerHTML=AL.map(([k,t])=>`<label class="f">${t}<input type="text" inputmode="decimal" data-s="${k}"></label>`).join('');
+ $('#tst').innerHTML=SP.map(([k,t])=>`<label class="f">${t}<input type="text" inputmode="numeric" data-t="${k}"></label>`).join('');
+ $('#dsc').innerHTML=GN.map(([k,t])=>`<label class="f">${t} (نمونه‌سوال تشریحی)<input type="text" inputmode="numeric" data-d="${k}"></label>`).join('');
+ $('#dsc').style.display='none';$('#rd').value=today();$('#jd').textContent='('+jf(today())+')';
+ $('#gen').onchange=e=>$('#dsc').style.display=e.target.checked?'':'none';
+ $('#rd').onchange=e=>$('#jd').textContent=e.target.value?'('+jf(e.target.value)+')':'';
+ $('#sub').oninput=$('#tot').oninput=chk;
+}
+function chk(){const t=num($('#tot').value),s=[...document.querySelectorAll('[data-s]')].reduce((a,i)=>a+num(i.value),0),d=Math.round((t-s)*100)/100,m=$('#sm');
+ m.className='msg '+(d===0&&t>0?'ok':'bad');m.textContent=t>0?(d===0?'مجموع درس‌ها با ساعت کلی برابر است.':'مجموع درس‌ها '+fa(s)+' است؛ '+(d>0?fa(d)+' ساعت کم است.':fa(-d)+' ساعت اضافه است.')):''}
+$('#save').onclick=async()=>{
+ const t=num($('#tot').value),subs={},tests={},desc={};let s=0;
+ document.querySelectorAll('[data-s]').forEach(i=>{const v=num(i.value);if(v){subs[i.dataset.s]=v;s+=v}});
+ if(!$('#rd').value)return msg('تاریخ را انتخاب کنید.');
+ if(!(t>0))return msg('ساعت مطالعه کلی را وارد کنید.');
+ if(Math.abs(t-s)>0.005)return msg('مجموع ساعت درس‌ها باید با ساعت مطالعه کلی برابر باشد.');
+ document.querySelectorAll('[data-t]').forEach(i=>{const v=Math.round(num(i.value));if(v)tests[i.dataset.t]=v});
+ if($('#gen').checked)document.querySelectorAll('[data-d]').forEach(i=>{const v=Math.round(num(i.value));if(v)desc[i.dataset.d]=v});
+ await addReport({date:$('#rd').value,total:t,subs,tests,desc,phone:num($('#ph').value)});
+ document.querySelectorAll('#v-rep input[type=text]').forEach(i=>i.value='');chk();msg('گزارش ثبت شد.',1)};
+function msg(t,ok){const m=$('#rm');m.className='msg '+(ok?'ok':'bad');m.textContent=t}
+/* history & profile */
+function renderHist(){
+ $('#pn').value=P.name||'';$('#pi').value=P.handle||'';$('#av').src=P.photo||'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><circle cx="36" cy="28" r="12" fill="#b9bccf"/><ellipse cx="36" cy="62" rx="22" ry="18" fill="#b9bccf"/></svg>');
+ const nm=Object.fromEntries(AL);
+ $('#hist').innerHTML='<h3>گزارش‌های ثبت‌شده</h3>'+(R.length?[...R].sort((a,b)=>b.date.localeCompare(a.date)||b.ts-a.ts).map(r=>{
+  const j=o=>Object.entries(o||{}).map(([k,v])=>nm[k]+': '+fa(v)).join('، ');
+  return `<div class="rep"><b style="color:var(--ti)">${jf(r.date)}</b>${r.sw?' (از کرنومتر)':''}<br>ساعت مطالعه: ${fa(r.total)}${r.subs&&Object.keys(r.subs).length?' ('+j(r.subs)+')':''}<br>${Object.keys(r.tests||{}).length?'تست: '+j(r.tests)+'<br>':''}${Object.keys(r.desc||{}).length?'تشریحی: '+j(r.desc)+'<br>':''}${r.phone?'گوشی: '+fa(r.phone)+' ساعت':''}</div>`}).join(''):'<p>هنوز گزارشی ثبت نشده.</p>');
+}
+$('#pf').onchange=e=>{const f=e.target.files[0];if(!f)return;const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d'),s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,128,128);P.photo=c.toDataURL('image/jpeg',.8);$('#av').src=P.photo};im.src=URL.createObjectURL(f)};
+$('#ps').onclick=async()=>{P.name=$('#pn').value.trim();P.handle=$('#pi').value.trim();await saveProfile();$('#ps').textContent='ذخیره شد ✓';setTimeout(()=>$('#ps').textContent='ذخیره پروفایل',1500)};
+function renderAll(){subPan();renderHome();if($('#v-his').classList.contains('on'))renderHist();if($('#v-pan').classList.contains('on'))renderPan()}
+$('#al').onclick=()=>authGo(0);$('#asg').onclick=()=>authGo(1);$('#lo').onclick=async()=>{await sb.auth.signOut();location.reload()};
+buildForm();go('home');swr();tick();init();
+</script></body></html>
