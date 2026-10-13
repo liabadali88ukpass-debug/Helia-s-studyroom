@@ -8,27 +8,27 @@
 body{margin:0;background:var(--bg);color:var(--tx);font-family:"Segoe UI",Tahoma,system-ui,sans-serif;font-size:14px;line-height:1.5}
 h1,h2,h3,.ti{color:var(--ti);font-weight:600;margin:0 0 12px}h2{font-size:20px}h3{font-size:16px}
 header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:56px;background:var(--bg);z-index:20;border-bottom:1px solid var(--ln)}
-#mb{position:absolute;right:14px;top:10px;width:38px;height:36px;border:1px solid var(--ln);background:#fff;border-radius:6px;cursor:pointer;font-size:18px;color:var(--ti)}
+#mb{position:absolute;right:14px;top:10px;width:38px;height:36px;border:1px solid var(--ln);background:#fff;border-radius:12px;cursor:pointer;font-size:18px;color:var(--ti)}
 #panel{position:fixed;top:calc(56px + env(safe-area-inset-top,0px));left:0;right:0;background:#fff;border-bottom:1px solid var(--ln);display:flex;gap:6px;padding:0 14px;overflow-x:auto;max-height:0;opacity:0;transition:.3s;z-index:19}
 #panel.open{max-height:64px;padding:10px 14px;opacity:1}
-#panel button{flex:none;border:1px solid var(--ln);background:var(--bg);color:var(--tx);padding:7px 16px;border-radius:6px;font:inherit;cursor:pointer}
+#panel button{flex:none;border:1px solid var(--ln);background:var(--bg);color:var(--tx);padding:7px 16px;border-radius:12px;font:inherit;cursor:pointer}
 #panel button.on{background:var(--ti);color:#fff;border-color:var(--ti)}
 #clk{position:fixed;z-index:21;color:var(--ti);font-weight:300;direction:ltr;white-space:nowrap;pointer-events:none}
 main{max-width:860px;margin:0 auto;padding:76px 16px 60px}
 .view{display:none}.view.on{display:block}
 .hero{height:210px}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
-.card,.box{background:var(--card);border:1px solid var(--ln);border-radius:8px;padding:14px}
-.card b{display:block;font-size:26px;font-weight:600;color:var(--ti)}.card span{font-size:12px}
+.card,.box{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:16px;box-shadow:0 2px 10px rgba(35,41,122,.05)}
+.card b{display:block;font-size:22px;font-weight:600;color:var(--ti)}.card span{font-size:12px}
 .seg{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
 .seg button,.chip{border:1px solid var(--ln);background:#fff;color:var(--tx);padding:4px 12px;border-radius:14px;font:inherit;cursor:pointer}
 .seg button.on,.chip.on{background:var(--ti);color:#fff;border-color:var(--ti)}
 svg{width:100%;height:auto;display:block}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
 label.f{display:block;font-size:13px}
-input[type=text],input[type=date]{width:100%;margin-top:4px;padding:8px;border:1px solid var(--ln);border-radius:6px;font:inherit;background:#fff;color:var(--tx)}
+input[type=text],input[type=date],select{width:100%;margin-top:4px;padding:8px;border:1px solid var(--ln);border-radius:12px;font:inherit;background:#fff;color:var(--tx)}
 input:focus{outline:2px solid var(--ti);outline-offset:-1px}
-.btn{background:var(--ti);color:#fff;border:0;padding:9px 22px;border-radius:6px;font:inherit;cursor:pointer}
+.btn{background:var(--ti);color:#fff;border:0;padding:10px 24px;border-radius:12px;font:inherit;cursor:pointer}
 .sec{margin-bottom:16px}.msg{font-size:13px;margin-top:6px;min-height:20px}.bad{color:#b3261e}.ok{color:#1b6e3a}
 #sw{text-align:center;padding-top:30px}
 #sd{font-size:min(20vw,110px);font-weight:200;direction:ltr;color:var(--tx);font-variant-numeric:tabular-nums}
@@ -38,17 +38,24 @@ input:focus{outline:2px solid var(--ti);outline-offset:-1px}
 .lap{display:flex;justify-content:space-between;max-width:420px;margin:0 auto;padding:8px 0;border-bottom:1px solid var(--ln);direction:ltr}
 .rep{padding:12px 0;border-bottom:1px solid var(--ln)}
 .av{width:72px;height:72px;border-radius:50%;background:#e6e6ec;object-fit:cover;border:1px solid var(--ln)}
-.row{display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid var(--ln)}.row.me{background:#eceef9;border-radius:6px}.row b{flex:1;font-weight:600}.rk{width:34px;text-align:center;font-weight:600;color:var(--ti);font-size:16px}.row .av{width:40px;height:40px}
+.row{display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid var(--ln)}.row.me{background:#eceef9;border-radius:14px}.row b{flex:1;font-weight:600}.rk{width:34px;text-align:center;font-weight:600;color:var(--ti);font-size:16px}.row .av{width:40px;height:40px}
 @media(max-width:560px){.cards{grid-template-columns:1fr}}
 #auth{position:fixed;inset:0;background:var(--bg);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}#auth .box{width:100%;max-width:360px}#auth .btn+.btn{background:#8a8f94;margin-inline-start:8px}
+div.f{font-size:13px}.hm{display:flex;align-items:center;gap:6px;margin-top:4px}.hm input{margin-top:0!important;text-align:center}.hm i{font-style:normal;color:#666}
+#pop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60;pointer-events:none;padding:16px}#pop.on{display:flex}
+.pc{pointer-events:auto;background:#fff;border-radius:24px;padding:24px 26px;max-width:340px;text-align:center;box-shadow:0 14px 44px rgba(35,41,122,.2);border:1px solid var(--ln);animation-duration:.9s;animation-timing-function:cubic-bezier(.22,1,.36,1);animation-fill-mode:backwards;transition:opacity .6s ease,transform .6s ease,filter .6s ease}
+.pc.out{opacity:0;transform:translateY(10px) scale(.97);filter:blur(4px)}.pc .pe{font-size:34px}.pc p{margin:6px 0 16px}
+.a0{animation-name:pA}.a1{animation-name:pB}.a2{animation-name:pC}.a3{animation-name:pD}.a4{animation-name:pE}
+@keyframes pA{from{opacity:0;transform:translateY(32px)}}@keyframes pB{from{opacity:0;transform:scale(.88)}}@keyframes pC{from{opacity:0;transform:translateX(64px)}}@keyframes pD{from{opacity:0;filter:blur(12px);transform:scale(1.06)}}@keyframes pE{from{opacity:0;transform:translateY(-32px) rotate(-2deg)}}
 </style></head><body>
+<div id="pop"></div>
 <div id="auth"><div class="box"><h2>ورود به پانسیون</h2><label class="f">ایمیل<input type="text" id="ae" dir="ltr" autocomplete="email"></label><label class="f" style="margin-top:8px">رمز عبور (حداقل ۶ کاراکتر)<input type="text" id="ap" dir="ltr" autocomplete="current-password" style="-webkit-text-security:disc"></label><label class="f" style="margin-top:8px">نام (فقط هنگام ثبت‌نام)<input type="text" id="an"></label><div style="margin-top:14px"><button class="btn" id="al">ورود</button><button class="btn" id="asg">ثبت‌نام</button></div><div class="msg bad" id="am"></div></div></div>
 <header><button id="mb" aria-label="منو">☰</button></header>
 <nav id="panel"></nav>
 <div id="clk"></div>
 <main>
 <section class="view on" id="v-home"><div class="hero"></div>
-<div class="cards"><div class="card"><span>میانگین ساعت مطالعه (۷ روز اخیر)</span><b id="c1">–</b></div><div class="card"><span>میانگین تعداد تست (۷ روز اخیر)</span><b id="c2">–</b></div><div class="card"><span>میانگین استفاده از گوشی (ساعت، ۷ روز اخیر)</span><b id="c3">–</b></div></div>
+<div class="cards"><div class="card"><span>میانگین ساعت مطالعه (۷ روز اخیر)</span><b id="c1">–</b></div><div class="card"><span>میانگین تعداد تست (۷ روز اخیر)</span><b id="c2">–</b></div><div class="card"><span>میانگین استفاده از گوشی (۷ روز اخیر)</span><b id="c3">–</b></div></div>
 <div id="charts"></div>
 <div class="box"><h3>روند ساعت مطالعه هر درس</h3><div class="seg" id="sg-s"></div><div class="seg" id="chips"></div><div id="ch-s"></div></div>
 </section>
@@ -58,12 +65,12 @@ input:focus{outline:2px solid var(--ti);outline-offset:-1px}
 <div class="msg" id="swm"></div><div id="laps"></div></div></section>
 <section class="view" id="v-rep"><h2>ثبت گزارش کار</h2>
 <div class="box sec"><label class="f">تاریخ گزارش <span id="jd"></span><input type="date" id="rd"></label></div>
-<div class="box sec"><h3>۱. ساعت مطالعه</h3><label class="f">ساعت مطالعه کلی (اعشاری، مثل ۲.۵)<input type="text" inputmode="decimal" id="tot"></label><div class="grid" id="sub" style="margin-top:12px"></div><div class="msg" id="sm"></div></div>
+<div class="box sec"><h3>۱. ساعت مطالعه</h3><div class="f">ساعت مطالعه کلی (ساعت : دقیقه)<div class="hm" id="tot"></div></div><div class="grid" id="sub" style="margin-top:12px"></div><div class="msg" id="sm"></div></div>
 <div class="box sec"><h3>۲. تعداد تست و نمونه‌سوال</h3><div class="grid" id="tst"></div>
 <label style="display:block;margin:14px 0 8px"><input type="checkbox" id="gen"> دروس عمومی</label><div class="grid" id="dsc"></div></div>
-<div class="box sec"><h3>۳. استفاده از گوشی</h3><label class="f">ساعت (اعشاری)<input type="text" inputmode="decimal" id="ph"></label></div>
+<div class="box sec"><h3>۳. استفاده از گوشی</h3><div class="f">مدت استفاده (ساعت : دقیقه)<div class="hm" id="ph"></div></div></div>
 <button class="btn" id="save">ثبت گزارش</button><div class="msg" id="rm"></div></section>
-<section class="view" id="v-pan"><h2>پانسیون</h2><p>رتبه‌بندی بر اساس زمان کرنومتر است؛ ساعت واردشده به‌صورت دستی در این رقابت حساب نمی‌شود.</p><div class="cards" id="pm"></div><div class="seg" id="sg-p"></div><div class="box" id="lb"></div></section>
+<section class="view" id="v-pan"><h2>پانسیون</h2><p>رتبه‌بندی بر اساس زمان مطالعه است؛ هم زمان کرنومتر و هم زمانی که دستی اضافه می‌کنید حساب می‌شود.</p><div class="box sec"><h3>افزودن دستی زمان مطالعه</h3><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end"><div class="f" style="flex:1;min-width:170px">زمان (ساعت : دقیقه)<div class="hm" id="mt"></div></div><label class="f" style="min-width:110px">روز<select id="md"><option value="0">امروز</option><option value="-1">دیروز</option></select></label><button class="btn" id="ma">افزودن</button></div><div class="msg" id="mm"></div></div><div class="cards" id="pm"></div><div class="seg" id="sg-p"></div><div class="box" id="lb"></div></section>
 <section class="view" id="v-his"><h2>پروفایل و گزارش‌های من</h2>
 <div class="box sec" style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><img class="av" id="av" alt=""><div style="flex:1;min-width:200px"><label class="f">نام<input type="text" id="pn"></label><label class="f" style="margin-top:6px">آیدی<input type="text" id="pi" dir="ltr"></label></div><div><input type="file" id="pf" accept="image/*" style="max-width:190px"><br><button class="btn" id="ps" style="margin-top:8px">ذخیره پروفایل</button> <button class="btn" id="lo" style="background:#8a8f94;margin-top:8px">خروج</button></div></div>
 <div id="hist"></div></section>
@@ -81,6 +88,9 @@ const jp=iso=>{const o={};new Intl.DateTimeFormat('en-u-ca-persian-nu-latn',{yea
 const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 const wk=iso=>{const d=D(iso);d.setDate(d.getDate()-(d.getDay()+1)%7);return ymd(d)};
 const today=()=>ymd(new Date());
+const HM='<input type="text" inputmode="numeric" placeholder="ساعت"><i>:</i><input type="text" inputmode="numeric" placeholder="دقیقه">';
+const hmv=el=>{const i=el.querySelectorAll('input'),h=Math.floor(num(i[0].value)),m=Math.floor(num(i[1].value));return{min:h*60+m,bad:m>=60}};
+const fmm=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return (h?fa(h)+' ساعت':'')+(h&&r?' و ':'')+((r||!h)?fa(r)+' دقیقه':'')};
 /* storage (Supabase) */
 const SUPABASE_URL='https://cloeuhbtokezphtnmggn.supabase.co',SUPABASE_KEY='sb_publishable_ujBImvUS-i4OkbDbjtZ5Uw_jqhYbUkJ';
 let sb=null,pendingName='';
@@ -136,14 +146,24 @@ const psum=(p,k)=>{const days=p.days||{},w=wk(today());let t=0;for(const i in da
 function renderPan(){
  const lb=$('#lb');
  if(!db||uid==='local'){lb.innerHTML='<p>برای استفاده از پانسیون باید با حساب خود وارد شوید.</p>';$('#pm').innerHTML='';$('#sg-p').innerHTML='';return}
- $('#pm').innerHTML=[['امروز','d'],['این هفته','w'],['مجموع','a']].map(([t,k])=>`<div class="card"><span>کرنومتر من: ${t}</span><b>${fh(psum(me,k))}</b></div>`).join('');
+ $('#pm').innerHTML=[['امروز','d'],['این هفته','w'],['مجموع','a']].map(([t,k])=>`<div class="card"><span>زمان من: ${t}</span><b>${fh(psum(me,k))}</b></div>`).join('');
  const md=mode.p||'w';$('#sg-p').innerHTML=[['d','امروز'],['w','این هفته'],['a','مجموع']].map(([k,t])=>`<button data-k="${k}" class="${md===k?'on':''}">${t}</button>`).join('');
  $('#sg-p').onclick=e=>{const k=e.target.dataset.k;if(k){mode.p=k;renderPan()}};
  const L=pan.map(p=>({p,t:psum(p,md)})).sort((a,b)=>b.t-a.t);
  const md3=['🥇','🥈','🥉'];
  lb.innerHTML=L.length?L.map((x,i)=>{const p=x.p,ph=typeof p.photo==='string'&&p.photo.indexOf('data:image/')===0?`<img class="av" src="${esc(p.photo)}" alt="">`:'<span class="av" style="display:inline-block"></span>';
-  return `<div class="row ${p.id===uid?'me':''}"><span class="rk">${md3[i]||fa(i+1)}</span>${ph}<b>${esc(p.name)||'بدون نام'}${p.handle?` <span dir="ltr" style="font-weight:400;font-size:12px">@${esc(p.handle)}</span>`:''}</b><span>${fh(x.t)} ساعت</span></div>`}).join(''):'<p>هنوز کسی در پانسیون نیست. کرنومتر را شروع و متوقف کنید تا نام شما اینجا ظاهر شود.</p>';
+  return `<div class="row ${p.id===uid?'me':''}"><span class="rk">${md3[i]||fa(i+1)}</span>${ph}<b>${esc(p.name)||'بدون نام'}${p.handle?` <span dir="ltr" style="font-weight:400;font-size:12px">@${esc(p.handle)}</span>`:''}</b><span>${fh(x.t)} ساعت</span></div>`}).join(''):'<p>هنوز کسی در پانسیون نیست. کرنومتر را شروع و متوقف کنید یا زمان دستی اضافه کنید تا نام شما اینجا ظاهر شود.</p>';
 }
+$('#ma').onclick=async()=>{const v=hmv($('#mt')),m=$('#mm');
+ const say=(t,ok)=>{m.className='msg '+(ok?'ok':'bad');m.textContent=t};
+ if(!sb)return say('ابتدا وارد شوید.');
+ if(v.bad)return say('عدد دقیقه باید بین ۰ تا ۵۹ باشد.');
+ if(v.min<1)return say('زمان را وارد کنید.');
+ if(v.min>720)return say('در هر بار حداکثر ۱۲ ساعت قابل افزودن است.');
+ const d=new Date();d.setDate(d.getDate()+(+$('#md').value));
+ const {error}=await sb.rpc('add_sw_seconds',{sec:v.min*60,d:ymd(d)});
+ if(error)return say('خطا: '+error.message);
+ say(fmm(v.min)+' اضافه شد.',1);$('#mt').querySelectorAll('input').forEach(i=>i.value='');loadPan()};
 /* aggregation */
 function days(){const m={};R.forEach(r=>{const d=m[r.date]=m[r.date]||{h:0,t:0,p:0,s:{}};d.h+=r.total||0;d.p+=r.phone||0;d.t+=Object.values(r.tests||{}).reduce((a,b)=>a+b,0);for(const k in r.subs||{})d.s[k]=(d.s[k]||0)+r.subs[k]});return m}
 function series(m,f,md){
@@ -168,7 +188,7 @@ function seg(el,key,cb){el.innerHTML=[['d','روزانه'],['w','هفتگی'],['
 const VAR=[['ساعت مطالعه',d=>d.h],['تعداد تست',d=>d.t],['استفاده از گوشی (ساعت)',d=>d.p]];
 function renderHome(){
  const m=days(),from=new Date();from.setDate(from.getDate()-6);const fi=ymd(from),rec=Object.keys(m).filter(k=>k>=fi);
- [0,1,2].forEach(i=>{$('#c'+(i+1)).textContent=rec.length?fa(rec.reduce((a,k)=>a+VAR[i][1](m[k]),0)/rec.length):'–'});
+ [0,1,2].forEach(i=>{const v=rec.length?rec.reduce((a,k)=>a+VAR[i][1](m[k]),0)/rec.length:null;$('#c'+(i+1)).textContent=v===null?'–':(i===1?fa(v):fmm(v*60))});
  const c=$('#charts');if(!c.children.length)VAR.forEach((v,i)=>{c.insertAdjacentHTML('beforeend',`<div class="box" style="margin-bottom:14px"><h3>${v[0]}</h3><div class="seg" id="sg${i}"></div><div id="ch${i}"></div></div>`)});
  VAR.forEach((v,i)=>{const draw=()=>{seg($('#sg'+i),i,draw);const s=series(m,v[1],mode[i]);chart($('#ch'+i),s.labels,[{c:COL[0],v:s.vals}])};draw()});
  const ds=()=>{seg($('#sg-s'),'s',ds);$('#chips').innerHTML=AL.map(([k,t],i)=>`<span class="chip ${sel.has(k)?'on':''}" data-k="${k}">${t}</span>`).join('');
@@ -203,27 +223,41 @@ $('#br').onclick=async()=>{if(sw.run){sw.acc+=performance.now()-sw.st;sw.run=fal
   if($('#auto').checked&&seg>=60000){await addReport({date:today(),total:seg/3600000,subs:{},tests:{},desc:{},phone:0,sw:1});$('#swm').textContent='زمان این مرحله در گزارش امروز ثبت شد.'}}
  else{sw.st=performance.now();sw.run=true;$('#swm').textContent=''}loop()};
 $('#bl').onclick=()=>{if(sw.run){const t=cur();sw.laps.push(t-(sw.lapT||0));sw.lapT=t}else{sw={run:false,acc:0,st:0,seg0:0,laps:[]};sw.lapT=0}swr()};
+/* popup */
+const QS=['هر دقیقه‌ای که الان می‌خونی، یه قدم به هدفته.','پیشرفت یعنی همین: ادامه دادن وقتی هیجانش کمتر شده.','تو الان داری از خودِ دیروزت جلو می‌زنی.','خسته‌ای؟ طبیعیه. چند نفس عمیق بکش و آروم ادامه بده.','کارهای بزرگ از همین ساعت‌های کوچیک ساخته می‌شن.','یه لیوان آب بخور و کمرت رو صاف کن، بعد برگرد سراغ درس.','لازم نیست عالی باشی، فقط لازمه ادامه بدی.','هر سؤالی که حل می‌کنی، ذهنت رو قوی‌تر می‌کنه.','نتیجه‌ی امروزت رو فردا می‌بینی؛ ادامه بده.','تمرکزت ارزشمنده؛ از همین لحظه نهایت استفاده رو ببر.'];
+let lastA=-1,popT;
+function closePop(){clearTimeout(popT);const c=document.querySelector('#pop .pc');if(!c)return;c.classList.add('out');setTimeout(()=>{$('#pop').className='';$('#pop').innerHTML=''},650)}
+function showPop(n){
+ clearTimeout(popT);let a;do{a=Math.floor(Math.random()*5)}while(a===lastA);lastA=a;
+ const q=QS[Math.floor(Math.random()*QS.length)],e=['🌿','☀️','🌊','✨','🍃'][a];
+ $('#pop').innerHTML=`<div class="pc a${a}"><div class="pe">${e}</div><h3>${fmm(n*90)} مطالعه کردی!</h3><p>${q}</p><button class="btn" id="pk">ادامه می‌دم</button></div>`;
+ $('#pop').className='on';$('#pk').onclick=closePop;popT=setTimeout(closePop,15000)}
+function chkPop(){if(!sw.run)return;const n=Math.floor(cur()/5400000);if(n>(sw.pop||0)){sw.pop=n;showPop(n)}}
+setInterval(chkPop,1000);
 /* report */
 function buildForm(){
- $('#sub').innerHTML=AL.map(([k,t])=>`<label class="f">${t}<input type="text" inputmode="decimal" data-s="${k}"></label>`).join('');
+ $('#sub').innerHTML=AL.map(([k,t])=>`<div class="f">${t}<div class="hm" data-s="${k}">${HM}</div></div>`).join('');
  $('#tst').innerHTML=SP.map(([k,t])=>`<label class="f">${t}<input type="text" inputmode="numeric" data-t="${k}"></label>`).join('');
  $('#dsc').innerHTML=GN.map(([k,t])=>`<label class="f">${t} (نمونه‌سوال تشریحی)<input type="text" inputmode="numeric" data-d="${k}"></label>`).join('');
  $('#dsc').style.display='none';$('#rd').value=today();$('#jd').textContent='('+jf(today())+')';
  $('#gen').onchange=e=>$('#dsc').style.display=e.target.checked?'':'none';
  $('#rd').onchange=e=>$('#jd').textContent=e.target.value?'('+jf(e.target.value)+')':'';
- $('#sub').oninput=$('#tot').oninput=chk;
+ $('#sub').oninput=$('#tot').oninput=chk;$('#tot').innerHTML=HM;$('#ph').innerHTML=HM;$('#mt').innerHTML=HM;
 }
-function chk(){const t=num($('#tot').value),s=[...document.querySelectorAll('[data-s]')].reduce((a,i)=>a+num(i.value),0),d=Math.round((t-s)*100)/100,m=$('#sm');
- m.className='msg '+(d===0&&t>0?'ok':'bad');m.textContent=t>0?(d===0?'مجموع درس‌ها با ساعت کلی برابر است.':'مجموع درس‌ها '+fa(s)+' است؛ '+(d>0?fa(d)+' ساعت کم است.':fa(-d)+' ساعت اضافه است.')):''}
+function chk(){const t=hmv($('#tot')).min,s=[...document.querySelectorAll('[data-s]')].reduce((a,i)=>a+hmv(i).min,0),d=t-s,m=$('#sm');
+ m.className='msg '+(d===0&&t>0?'ok':'bad');m.textContent=t>0?(d===0?'مجموع درس‌ها با ساعت کلی برابر است.':'مجموع درس‌ها '+fmm(s)+' است؛ '+(d>0?fmm(d)+' کم است.':fmm(-d)+' اضافه است.')):''}
 $('#save').onclick=async()=>{
- const t=num($('#tot').value),subs={},tests={},desc={};let s=0;
- document.querySelectorAll('[data-s]').forEach(i=>{const v=num(i.value);if(v){subs[i.dataset.s]=v;s+=v}});
+ const T=hmv($('#tot')),subs={},tests={},desc={};let s=0,bad=T.bad;
+ document.querySelectorAll('[data-s]').forEach(i=>{const v=hmv(i);if(v.bad)bad=true;if(v.min){subs[i.dataset.s]=v.min/60;s+=v.min}});
+ const PH=hmv($('#ph'));if(PH.bad)bad=true;
  if(!$('#rd').value)return msg('تاریخ را انتخاب کنید.');
- if(!(t>0))return msg('ساعت مطالعه کلی را وارد کنید.');
- if(Math.abs(t-s)>0.005)return msg('مجموع ساعت درس‌ها باید با ساعت مطالعه کلی برابر باشد.');
+ if(bad)return msg('عدد دقیقه باید بین ۰ تا ۵۹ باشد.');
+ if(!(T.min>0))return msg('ساعت مطالعه کلی را وارد کنید.');
+ if(T.min>1440)return msg('ساعت مطالعه نمی‌تواند بیش از ۲۴ ساعت باشد.');
+ if(T.min!==s)return msg('مجموع ساعت درس‌ها باید با ساعت مطالعه کلی برابر باشد.');
  document.querySelectorAll('[data-t]').forEach(i=>{const v=Math.round(num(i.value));if(v)tests[i.dataset.t]=v});
  if($('#gen').checked)document.querySelectorAll('[data-d]').forEach(i=>{const v=Math.round(num(i.value));if(v)desc[i.dataset.d]=v});
- await addReport({date:$('#rd').value,total:t,subs,tests,desc,phone:num($('#ph').value)});
+ await addReport({date:$('#rd').value,total:T.min/60,subs,tests,desc,phone:PH.min/60});
  document.querySelectorAll('#v-rep input[type=text]').forEach(i=>i.value='');chk();msg('گزارش ثبت شد.',1)};
 function msg(t,ok){const m=$('#rm');m.className='msg '+(ok?'ok':'bad');m.textContent=t}
 /* history & profile */
@@ -231,8 +265,8 @@ function renderHist(){
  $('#pn').value=P.name||'';$('#pi').value=P.handle||'';$('#av').src=P.photo||'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><circle cx="36" cy="28" r="12" fill="#b9bccf"/><ellipse cx="36" cy="62" rx="22" ry="18" fill="#b9bccf"/></svg>');
  const nm=Object.fromEntries(AL);
  $('#hist').innerHTML='<h3>گزارش‌های ثبت‌شده</h3>'+(R.length?[...R].sort((a,b)=>b.date.localeCompare(a.date)||b.ts-a.ts).map(r=>{
-  const j=o=>Object.entries(o||{}).map(([k,v])=>nm[k]+': '+fa(v)).join('، ');
-  return `<div class="rep"><b style="color:var(--ti)">${jf(r.date)}</b>${r.sw?' (از کرنومتر)':''}<br>ساعت مطالعه: ${fa(r.total)}${r.subs&&Object.keys(r.subs).length?' ('+j(r.subs)+')':''}<br>${Object.keys(r.tests||{}).length?'تست: '+j(r.tests)+'<br>':''}${Object.keys(r.desc||{}).length?'تشریحی: '+j(r.desc)+'<br>':''}${r.phone?'گوشی: '+fa(r.phone)+' ساعت':''}</div>`}).join(''):'<p>هنوز گزارشی ثبت نشده.</p>');
+  const j=o=>Object.entries(o||{}).map(([k,v])=>nm[k]+': '+fa(v)).join('، '),js=o=>Object.entries(o||{}).map(([k,v])=>nm[k]+': '+fmm(v*60)).join('، ');
+  return `<div class="rep"><b style="color:var(--ti)">${jf(r.date)}</b>${r.sw?' (از کرنومتر)':''}<br>ساعت مطالعه: ${fmm(r.total*60)}${r.subs&&Object.keys(r.subs).length?' ('+js(r.subs)+')':''}<br>${Object.keys(r.tests||{}).length?'تست: '+j(r.tests)+'<br>':''}${Object.keys(r.desc||{}).length?'تشریحی: '+j(r.desc)+'<br>':''}${r.phone?'گوشی: '+fmm(r.phone*60):''}</div>`}).join(''):'<p>هنوز گزارشی ثبت نشده.</p>');
 }
 $('#pf').onchange=e=>{const f=e.target.files[0];if(!f)return;const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d'),s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,128,128);P.photo=c.toDataURL('image/jpeg',.8);$('#av').src=P.photo};im.src=URL.createObjectURL(f)};
 $('#ps').onclick=async()=>{P.name=$('#pn').value.trim();P.handle=$('#pi').value.trim();await saveProfile();$('#ps').textContent='ذخیره شد ✓';setTimeout(()=>$('#ps').textContent='ذخیره پروفایل',1500)};
