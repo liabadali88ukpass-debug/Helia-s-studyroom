@@ -269,7 +269,7 @@ $('#save').onclick=async()=>{
 function msg(t,ok){const m=$('#rm');m.className='msg '+(ok?'ok':'bad');m.textContent=t}
 /* history & profile */
 function renderHist(){
- $('#pn').value=P.name||'';$('#pi').value=P.handle\vert{}\vert{}'';$('#av').src=P.photo||'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><circle cx="36" cy="28" r="12" fill="#b9bccf"/><ellipse cx="36" cy="62" rx="22" ry="18" fill="#b9bccf"/></svg>');
+ $('#pn').value=P.name||'';$('#pi').value = P.handle || '';$('#av').src=P.photo||'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><circle cx="36" cy="28" r="12" fill="#b9bccf"/><ellipse cx="36" cy="62" rx="22" ry="18" fill="#b9bccf"/></svg>');
  const nm=Object.fromEntries(AL);
  $('#hist').innerHTML='<h3>گزارش‌های ثبت‌شده</h3>'+(R.length?[...R].sort((a,b)=>b.date.localeCompare(a.date)||b.ts-a.ts).map(r=>{
   const j=o=>Object.entries(o||{}).map(([k,v])=>nm[k]+': '+v).join('، '),js=o=>Object.entries(o||{}).map(([k,v])=>nm[k]+': '+fmm(v*60)).join('، ');
